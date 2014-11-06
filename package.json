@@ -1,6 +1,6 @@
 {
   "name": "nodebb-plugin-location-to-map",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A Plugin that turns location strings into google maps",
   "main": "index.js",
   "scripts": {

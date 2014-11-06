@@ -1,0 +1,18 @@
+{
+  "name": "nodebb-plugin-location-to-map",
+  "version": "0.0.1",
+  "description": "A Plugin that turns location strings into google maps",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodebb",
+    "plugin",
+    "google map",
+    "location"
+  ],
+  "author": "Baris Usakli <baris@nodebb.org>",
+  "license": "BSD-2-Clause",
+  "dependencies": {}
+}

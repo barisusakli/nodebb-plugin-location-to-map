@@ -5,7 +5,6 @@
     "url": "https://github.com/barisusakli/nodebb-plugin-location-to-map",
     "library": "./index.js",
     "hooks": [
-        { "hook": "filter:user.account", "method": "getAccount", "priority": 6 }
-    ],
-    "minver": "0.6.0"
+        { "hook": "filter:user.account", "method": "getAccount" }
+    ]
 }

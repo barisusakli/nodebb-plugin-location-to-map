@@ -14,5 +14,8 @@
   ],
   "author": "Baris Usakli <baris@nodebb.org>",
   "license": "BSD-2-Clause",
-  "dependencies": {}
+  "dependencies": {},
+  "nbbpm": {
+    "compatibility": "^0.6.0"
+  }
 }

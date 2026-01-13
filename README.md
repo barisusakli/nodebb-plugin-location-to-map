@@ -13,3 +13,5 @@ Converts the location string on a users profile to a google map
 
 ![](./maps.gif)
 
+![](./maps2.gif)
+

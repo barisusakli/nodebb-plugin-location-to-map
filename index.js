@@ -1,15 +1,56 @@
 'use strict';
 
-(function(module) {
+const meta = require.main.require('./src/meta');
 
-	module.getAccount = function(data, callback) {
-		if (!data || !data.userData || !data.userData.location) {
-			return callback(null, data);
-		}
 
-		data.userData.location = data.userData.location + '<br/><img class="img-responsive" src="https://maps.googleapis.com/maps/api/staticmap?center=' + data.userData.location + '&zoom=13&size=600x300&maptype=roadmap" />';
+const googleMapsIcon = `<svg width="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 92.3 132.3"><path fill="#1a73e8" d="M60.2 2.2C55.8.8 51 0 46.1 0 32 0 19.3 6.4 10.8 16.5l21.8 18.3L60.2 2.2z"/><path fill="#ea4335" d="M10.8 16.5C4.1 24.5 0 34.9 0 46.1c0 8.7 1.7 15.7 4.6 22l28-33.3-21.8-18.3z"/><path fill="#4285f4" d="M46.2 28.5c9.8 0 17.7 7.9 17.7 17.7 0 4.3-1.6 8.3-4.2 11.4 0 0 13.9-16.6 27.5-32.7-5.6-10.8-15.3-19-27-22.7L32.6 34.8c3.3-3.8 8.1-6.3 13.6-6.3"/><path fill="#fbbc04" d="M46.2 63.8c-9.8 0-17.7-7.9-17.7-17.7 0-4.3 1.5-8.3 4.1-11.3l-28 33.3c4.8 10.6 12.8 19.2 21 29.9l34.1-40.5c-3.3 3.9-8.1 6.3-13.5 6.3"/><path fill="#34a853" d="M59.1 109.2c15.4-24.1 33.3-35 33.3-63 0-7.7-1.9-14.9-5.2-21.3L25.6 98c2.6 3.4 5.3 7.3 7.9 11.3 9.4 14.5 6.8 23.1 12.8 23.1s3.4-8.7 12.8-23.2"/></svg>`
 
-		callback(null, data);
-	};
-}(module.exports));
+exports.init = async function (params) {
+	const { router } = params;
+	const routeHelpers = require.main.require('./src/routes/helpers');
 
+	routeHelpers.setupAdminPageRoute(router, '/admin/plugins/location-to-map', async (req, res) => {
+		res.render('admin/plugins/location-to-map', {
+			title: 'Location To Map',
+		});
+	});
+};
+
+exports.getAccount = async function(hookData) {
+	const { templateData } = hookData;
+	if (!Array.isArray(templateData.customUserFields)) {
+		return hookData;
+	}
+	const location = templateData.customUserFields.find(field => field.key === 'location');
+	if (!location) {
+		return hookData;
+	}
+	const settings = await meta.settings.get('location-to-map') || {};
+	if (!settings.apikey) {
+		return hookData;
+	}
+
+	const key = settings.apikey;
+	const mapHref = `https://www.google.ca/maps?q=${encodeURIComponent(location.value)}&z=13`;
+	const anchor = `<a class="dropdown-item location-to-map-link p-0" href="${mapHref}" target="_blank" rel="nofollow noreferrer"></a>`
+
+	const dropdownButton = `<button data-key="${key}" data-location="${location.value}" id="location-to-map-dropdown" class="btn btn-ghost btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" title="View Location on Map">
+		${googleMapsIcon}
+	</button>
+	<ul class="dropdown-menu p-0" style="width: 600px; height:300px; overflow:hidden;">
+		<li>${anchor}</li>
+	</ul>`;
+
+	location.value = location.value + `&nbsp;${dropdownButton}`;
+	return hookData;
+};
+
+
+exports.addAdminNavigation = async function (header) {
+	header.plugins.push({
+		route: '/plugins/location-to-map',
+		icon: 'fa-map-pin',
+		name: 'Location To Map',
+	});
+	return header;
+};

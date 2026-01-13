@@ -1,10 +1,15 @@
 {
-    "id": "nodebb-plugin-location-to-map",
-    "name": "Location to Map Plugin",
-    "description": "A Plugin that turns location strings into google maps",
-    "url": "https://github.com/barisusakli/nodebb-plugin-location-to-map",
-    "library": "./index.js",
-    "hooks": [
-        { "hook": "filter:user.account", "method": "getAccount" }
-    ]
+	"url": "https://github.com/barisusakli/nodebb-plugin-location-to-map",
+	"library": "./index.js",
+	"hooks": [
+		{ "hook": "static:app.load", "method": "init" },
+		{ "hook": "filter:account/profile.build", "method": "getAccount" },
+		{ "hook": "filter:admin.header.build", "method": "addAdminNavigation" }
+	],
+	"scripts": [
+		"public/main.js"
+	],
+	"modules": {
+		"../admin/plugins/location-to-map.js": "public/admin.js"
+	}
 }

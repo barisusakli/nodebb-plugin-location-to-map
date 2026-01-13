@@ -13,9 +13,9 @@
     "location"
   ],
   "author": "Baris Usakli <baris@nodebb.org>",
-  "license": "BSD-2-Clause",
+  "license": "MIT",
   "dependencies": {},
   "nbbpm": {
-    "compatibility": "^0.6.0"
+    "compatibility": "^2.x || ^3.x || ^4.x"
   }
 }

@@ -6,6 +6,10 @@ Converts the location string on a users profile to a google map
 
     npm install nodebb-plugin-location-to-map
 
+    Get an API key from https://console.cloud.google.com/ and enable Maps Static API.
 
-![](http://i.imgur.com/3hUzSVu.png)
+    Put your API key in the admin page of this plugin and save.
+
+
+![](./maps.gif)
 

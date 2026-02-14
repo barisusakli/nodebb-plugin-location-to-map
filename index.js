@@ -34,14 +34,14 @@ exports.getAccount = async function(hookData) {
 	const mapHref = `https://www.google.ca/maps?q=${encodeURIComponent(location.value)}&z=13`;
 	const anchor = `<a class="dropdown-item location-to-map-link p-0" href="${mapHref}" target="_blank" rel="nofollow noreferrer"></a>`
 
-	const dropdownButton = `<button data-key="${key}" data-location="${location.value}" id="location-to-map-dropdown" class="btn btn-ghost btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" title="View Location on Map">
+	const dropdown = `<div class="dropdown d-inline-block"><button data-key="${key}" data-location="${location.value}" id="location-to-map-dropdown" class="btn btn-ghost btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" title="View Location on Map">
 		${googleMapsIcon}
 	</button>
 	<ul class="dropdown-menu p-0" style="width: 600px; height:300px; overflow:hidden;">
 		<li>${anchor}</li>
-	</ul>`;
+	</ul></div>`;
 
-	location.value = location.value + `&nbsp;${dropdownButton}`;
+	location.value = location.value + `&nbsp;${dropdown}`;
 	return hookData;
 };
 
